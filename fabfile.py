@@ -62,7 +62,7 @@ def bounceF5(members, port, pools):
         return wraps(func)(innerclosuref)
     return closuref
 
-
+@task
 @bounceF5(env.hosts, memberport, f5pools)
 @parallel
 def easyRestart():
