@@ -1,0 +1,8 @@
+{
+  "F5_config": {
+    "server": "<F5 IP or DNS Name>",
+    "port": 443,
+    "user": "<F5 USER>",
+    "passw": "<F5_password>"
+  }
+}
