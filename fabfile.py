@@ -32,10 +32,8 @@ env.path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 # env.shell = "/bin/bash -l -c"
 # env.use_shell = True
 # env.always_use_pty = True
-# env.hosts = ['10.254.222.153', '10.254.222.154']
 env.hosts = []
 memberport = '8090'
-# f5pools = ['solr-sandbox']
 f5pools = []
 
 config_file = '/opt/fabric/.f5config'
