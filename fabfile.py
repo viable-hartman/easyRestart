@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-
-from __future__ import with_statement
-# Import used for Fabric parallel ssh commands
 from fabric.api import *
+
 from fabric.exceptions import NetworkError
 from fabric.colors import red, green
 # Import used for system and OS interactions
