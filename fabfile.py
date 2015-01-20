@@ -60,6 +60,20 @@ def bounceF5(members, port, pools):
     return closuref
 
 @task
+def disableMembers(jsonmembers, pools):
+    if(f5man):  # F5 Manager instantiated
+        members = json.loads(jsonmembers)
+        for member in members:
+            f5man.disableMember(member, pools)
+
+@task
+def enableMembers(jsonmembers, pools):
+    if(f5man):  # F5 Manager instantiated
+        members = json.loads(jsonmembers)
+        for member in members:
+            f5man.enableMember(member, pools)
+
+@task
 @bounceF5(env.hosts, memberport, f5pools)
 @parallel
 def easyRestart():
