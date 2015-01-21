@@ -30,6 +30,8 @@ env.path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 # env.use_shell = True
 # env.always_use_pty = True
 env.hosts = []
+env.memberport = ''
+env.f5pools = '[]'
 
 config_file = '/opt/fabric/.f5config'
 config = {}
@@ -63,3 +65,14 @@ def bounceF5(members, port, jsonpools):
 @parallel
 def Restart():
     sudo('/sbin/restart %s' % env.service);
+
+@task
+@parallel
+def test_env(argument="nothing"):
+    print("Task Arguments:")
+    print argument
+    print
+
+    print("Task Env:")
+    for x, y in env.iteritems():
+        print '{}: {}'.format(x, y)
