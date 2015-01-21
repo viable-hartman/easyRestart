@@ -16,6 +16,8 @@ from functools import wraps
 # Import F5 Manager code
 sys.path.insert(0, '/opt/RadRockingScripts/F5Scripts')
 from f5manager import F5Manager
+# Import socket for IP lookups
+import socket
 # Globally disable SSL Certificat verification
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -49,7 +51,7 @@ def bounceF5():
             if(f5man):  # F5 Manager instantiated
                 pools = json.loads(env.f5pools)
                 for host in env.hosts:
-                    member = {'address': host, 'port': env.memberport}
+                    member = {'address': socket.gethostbyname(host), 'port': env.memberport}
                     f5man.disableMember(member, pools)
                     func(*args, **kwargs)
                     f5man.enableMember(member, pools)
