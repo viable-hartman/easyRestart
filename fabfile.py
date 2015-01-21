@@ -60,23 +60,7 @@ def bounceF5(members, port, pools):
     return closuref
 
 @task
-def disableMembers(jsonmembers, jsonpools):
-    if(f5man):  # F5 Manager instantiated
-        members = json.loads(jsonmembers)
-        pools = json.loads(jsonpools)
-        for member in members:
-            f5man.disableMember(member, pools)
-
-@task
-def enableMembers(jsonmembers, jsonpools):
-    if(f5man):  # F5 Manager instantiated
-        members = json.loads(jsonmembers)
-        pools = json.loads(jsonpools)
-        for member in members:
-            f5man.enableMember(member, pools)
-
-@task
 @bounceF5(env.hosts, memberport, f5pools)
 @parallel
-def easyRestart():
-    sudo('ls -lad /root');
+def Restart():
+    sudo('/sbin/restart %s' % env.service);
