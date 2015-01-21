@@ -29,9 +29,6 @@ env.path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 # env.shell = "/bin/bash -l -c"
 # env.use_shell = True
 # env.always_use_pty = True
-env.hosts = []
-env.memberport = ''
-env.f5pools = '[]'
 
 config_file = '/opt/fabric/.f5config'
 config = {}
@@ -45,13 +42,14 @@ with open("%s" % (config_file), 'r') as inFile:
         traceback.print_exc()
 
 # Global wrapper for F5 control
-def bounceF5(members, port, jsonpools):
+# def bounceF5(members, port, jsonpools):
+def bounceF5():
     def closuref(func):
         def innerclosuref(*args, **kwargs):
             if(f5man):  # F5 Manager instantiated
-                pools = json.loads(jsonpools)
-                for host in members:
-                    member = {'address': host, 'port': port}
+                pools = json.loads(env.f5pools)
+                for host in env.hosts:
+                    member = {'address': host, 'port': env.memberport}
                     f5man.disableMember(member, pools)
                     func(*args, **kwargs)
                     f5man.enableMember(member, pools)
@@ -61,7 +59,8 @@ def bounceF5(members, port, jsonpools):
     return closuref
 
 @task
-@bounceF5(env.hosts, env.memberport, env.f5pools)
+# @bounceF5(env.hosts, env.memberport, env.f5pools)
+@bounceF5()
 @parallel
 def Restart():
     sudo('/sbin/restart %s' % env.service);
